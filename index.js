@@ -3,15 +3,20 @@
 require('./plugins/dotenv')
 
 const cors = require('./plugins/cors')
-const express = require('express');
-const app = express();
+const express = require('express')
+const bodyParser = require("body-parser")
+
+
+const app = express()
 
 app.use(cors);
+app.use(bodyParser.json())
+
 
 /* ---- use apis ---- */
-app.get('/', (req, res) => res.send(`<h1>HELLO FROM SERVER</h1>`));
+app.get('/', (req, res) => res.send(`<h1>HELLO FROM SERVER</h1>`))
 
-const mockAPI = require('./apis/mock');
+const mockAPI = require('./apis/mock')
 const todoAPI = require('./apis/todo')
 
 mockAPI(app)
@@ -21,5 +26,5 @@ todoAPI(app)
 const { PORT = 3003 } = process.env
 
 app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+    console.log(`Server is listening on port ${PORT}`)
 });
