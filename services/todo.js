@@ -1,48 +1,50 @@
-
-const todos = [
-    { id: 1, createdAt: Date.now(), title: 'Eat Banana', description: 'Eat Banana' },
-    { id: 2, createdAt: Date.now(), title: 'Eat Apple', description: 'Eat Apple' },
-    { id: 3, createdAt: Date.now(), title: 'Eat Almond', description: 'Eat Almond' },
-]
-
+// private
 function wait(ms) {
     return new Promise(res => setTimeout(res, ms))
 }
 
-function getTodos() {
-    return todos;
+
+//public
+async function getTodoById(id) {
+    await wait(0)
+    return _todos[id]
+}
+async function getTodosByIds(ids) {
+    await wait(0)
+    return ids.reduce((acc, id) => {
+        if (_todos[id]) {
+            return acc ? { ...acc, [id]: _todos[id] } : { [id]: _todos[id] }
+        }
+        return acc
+    }, null)
+}
+async function assignTodos(id, todo) {
+    await wait(0)
+    _todos[id] = todo
+}
+async function unassignTodos(id) {
+    await wait(0)
+    delete _todos[id]
 }
 
-async function findIdx(id) {
-    await wait(0)
-    return todos.findIndex(todo => todo.id == id)
+// for testing purposes
+function getAllTodos() {
+    return { ..._todos }
 }
 
-async function getTodo(id) {
-    await wait(0)
-    return todos.find(todo => todo.id === id)
+
+const _todos = {
+    1: { createdAt: Date.now(), title: 'Eat Banana', description: 'Eat Banana' },
+    2: { createdAt: Date.now(), title: 'Eat Apple', description: 'Eat Apple' },
+    3: { createdAt: Date.now(), title: 'Eat Almond', description: 'Eat Almond' }
+
 }
 
-async function addTodo(todo) {
-    await wait(0)
-    todos.push(todo)
-}
-
-async function removeTodo(idx) {
-    await wait(0)
-    todos.splice(idx, 1)
-}
-
-async function replaceTodo(idx, todo) {
-    await wait(0)
-    todos[idx] = todo
-}
 
 module.exports = {
-    findIdx,
-    getTodos,
-    getTodo,
-    addTodo,
-    removeTodo,
-    replaceTodo
+    assignTodos,
+    unassignTodos,
+    getTodoById,
+    getTodosByIds,
+    getAllTodos // for testing purposes
 };

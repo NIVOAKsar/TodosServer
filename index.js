@@ -6,6 +6,14 @@ const cors = require('./plugins/cors')
 const express = require('express')
 const bodyParser = require("body-parser")
 
+// const cookieParser = require("cookie-parser");
+// const session = require("express-session");
+// const fileUpload = require("express-fileupload");
+// const io = require("socket.io")(http);
+
+
+
+
 
 const app = express()
 
@@ -22,9 +30,12 @@ const todoAPI = require('./apis/todo')
 mockAPI(app)
 todoAPI(app)
 
+
 /* ---- run server ---- */
 const { PORT = 3003 } = process.env
 
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`)
 });
+
+
