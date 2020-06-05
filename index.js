@@ -22,7 +22,8 @@ const app = express()
 /* ---- use middlewares ---- */
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Accept, Authorization')
+    // res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Accept, Authorization')
+    res.header('Access-Control-Allow-Headers', '*')
 
     if (req.method === 'OPTIONS') {
         res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET')
@@ -34,6 +35,7 @@ app.use(cors);
 app.use(bodyParser.json())
 
 /* ---- use apis ---- */
+app.get('/', (req, res) => res.send('<h1>Hello From Todos App Server!</h1>'))
 app.use(BASE + '/todos', require('./apis/routes/todos'))
 
 /* ---- use 404 ---- */
@@ -53,7 +55,7 @@ app.use((error, req, res, next) => {
 
 /* ---- run server ---- */
 app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`)
+    console.log(`[SERVER]: app is listening on port ${PORT}`)
 });
 
 
